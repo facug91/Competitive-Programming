@@ -1,9 +1,9 @@
 /*
 	By: facug91
-	From: http://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=503
-	Name: Dividing coins
-	Number: 562
-	Date: 28/08/2014
+	From: http://lightoj.com/volume_showproblem.php?problem=1042
+	Name: Secret Origins
+	Number: 1042
+	Date: 02/08/2014
 */
 
 #include <iostream>
@@ -33,37 +33,32 @@
 const double PI = 2.0*acos(0.0);
 
 #define INF 1000000000
+#define MOD 1000000007
 
 using namespace std;
 typedef long long ll;
 typedef pair<int, int> ii;
 typedef pair<int, pair<int, int> > iii;
 
-int n, t, w, bag[105], DP[105][25005], ans;
+int n;
 
-int dp (int idx, int wi) {
-	if (idx == n) return wi;
-	if (DP[idx][wi] != -1) return DP[idx][wi];
-	if (wi+bag[idx] > w) return DP[idx][wi] = max(wi, dp(idx+1, wi));
-	return DP[idx][wi] = max(dp(idx+1, wi), dp(idx+1, wi+bag[idx]));
+void search () {
+	int i, j, k;
+	for (i=0; !(n & (1<<i)); i++);
+	for (j=i+1; (n & (1<<j)); j++);
+	k = j - i - 1;
+	n = (n & (~((1<<j)-1))) | (1<<j);
+	for (i=0; i<k; i++) n |= (1<<i);
 }
 
 int main () {
-	ios_base::sync_with_stdio(0);
-	int TC, i, j;
+	int t, i, j;
 	
-	cin>>TC;
-	while (TC--) {
-		cin>>n;
-		t = 0;
-		for (i=0; i<n; i++) {
-			cin>>bag[i];
-			t += bag[i];
-		}
-		w = t / 2;
-		memset(DP, -1, sizeof DP);
-		ans = dp(0, 0);
-		cout<<abs(ans-(t-ans))<<endl;
+	scanf("%d", &t);
+	for (int it=1; it<=t; it++) {
+		scanf("%d", &n);
+		search();
+		printf("Case %d: %d\n", it, n);
 	}
 	
 	return 0;
