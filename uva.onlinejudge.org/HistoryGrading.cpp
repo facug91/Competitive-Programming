@@ -16,11 +16,11 @@ const double PI = 2.0*acos(0.0);
 
 #define INF 1000000000
 //#define MOD 1000000007
+//#define MAXN 1000005
 
 using namespace std;
 typedef long long ll;
 typedef pair<int, int> ii;
-typedef pair<int, pair<int, int> > iii;
 
 int n, event, order[25], seq[25], lis[25];
 
@@ -40,7 +40,6 @@ int LIS () {
 }
 
 int main () {
-	ios_base::sync_with_stdio(0);
 	int TC, i, j;
 	
 	scanf("%d", &n);
