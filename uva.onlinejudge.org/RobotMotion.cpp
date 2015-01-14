@@ -61,20 +61,6 @@ int main () {
 		else printf("%d step(s) before a loop of %d step(s)\n", ans.first, ans.second);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	return 0;
 }
 

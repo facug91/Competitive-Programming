@@ -22,22 +22,23 @@ using namespace std;
 typedef long long ll;
 typedef pair<int, int> ii;
 
-int ans1, ans2;
-string s;
+int ans1, ans2, len;
+char s[1005];
 bool p;
 
 int main () {
-	ios_base::sync_with_stdio(0);
+	//ios_base::sync_with_stdio(0);
 	int TC, i, j;
 	
-	while (cin>>s) {
+	while (scanf("%s", s) != EOF) {
+		len = strlen(s);
 		ans1 = 0;
-		for (i=0, p=0; i<(int)s.length(); i++, p^=1)
+		for (i=0, p=0; i<len; i++, p^=1)
 			if ((s[i] >= 'A' && s[i] <= 'Z') == p) ans1++;
 		ans2 = 0;
-		for (i=0, p=1; i<(int)s.length(); i++, p^=1)
+		for (i=0, p=1; i<len; i++, p^=1)
 			if ((s[i] >= 'A' && s[i] <= 'Z') == p) ans2++;
-		cout<<min(ans1, ans2)<<endl;
+		printf("%d\n", min(ans1, ans2));
 	}
 	
 	

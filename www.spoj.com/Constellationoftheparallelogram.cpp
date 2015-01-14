@@ -64,7 +64,7 @@ vector<Segment> segments;
 
 int main () {
 	//ios_base::sync_with_stdio(0);
-	int TC, i, j;
+	int TC, i, j, k;
 	
 	scanf("%d", &n);
 	for (i=0; i<n; i++) {
@@ -79,11 +79,13 @@ int main () {
 	sort(segments.begin(), segments.end(), cmp());
 	ans = 0;
 	for (i=0; i<(int)segments.size(); i++) {
-		j = i+1;
+		j = i+1; k = 0;
 		while ((j<(int)segments.size()) && (fabs(segments[i].m-segments[j].m) < EPS) && (fabs(segments[i].l-segments[j].l) < EPS)) {
-			if (!collinear(segments[i].p1, segments[i].p2, segments[j].p1)) ans++;
+			if (!collinear(segments[i].p1, segments[i].p2, segments[j].p1)) k++;
 			j++;
 		}
+		i = j - 1;
+		ans += (k * (k-1) / 2);
 	}
 	printf("%d\n", ans/2);
 	
