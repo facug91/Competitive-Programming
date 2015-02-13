@@ -68,30 +68,31 @@ int dijkstra (int from, int to) {
 }
 
 int main () {
+	ios_base::sync_with_stdio(0);
 	int TC, i, j, f;
 	
-	while (scanf("%d %d %d", &r, &c, &n) != EOF) {
+	while (cin>>r>>c>>n) {
 		
 		for (i=0; i<r; i++)
 			for (j=0; j<c; j++)
-				scanf("%d", &kingdom[i][j].first);
+				cin>>kingdom[i][j].first;
 		
 		for (i=0; i<r; i++)
 			for (j=0; j<c; j++)
-				scanf("%d", &kingdom[i][j].second.first);
+				cin>>kingdom[i][j].second.first;
 		
 		for (i=0; i<r; i++)
 			for (j=0; j<c; j++)
-				scanf("%d", &kingdom[i][j].second.second);
+				cin>>kingdom[i][j].second.second;
 		
 		for (i=0; i<n; i++) {
-			scanf("%d %d", &provinces[i].first, &provinces[i].second);
+			cin>>provinces[i].first>>provinces[i].second;
 			provinces[i].first--; provinces[i].second--;
 		}
 		
 		for (i=0; i<n-2; i++)
-			printf("%d ", dijkstra(i, i+1));
-		printf("%d\n", dijkstra(n-2, n-1));
+			cout<<dijkstra(i, i+1)<<" ";
+		cout<<dijkstra(i, i+1)<<endl;
 		
 	}
 	
