@@ -1,0 +1,42 @@
+/*
+        By: facug91
+        From: http://coj.uci.cu/24h/problem.xhtml?pid=2178
+        Name: Love Count
+        Date: 05/04/2015
+*/
+
+#include <bits/stdc++.h>
+#define EPS 1e-9
+#define DEBUG(x) cerr << "#" << (#x) << ": " << (x) << endl
+const double PI = 2.0*acos(0.0);
+
+#define INF 1000000000
+//#define MOD 1000000
+//#define MAXN 1000005
+
+using namespace std;
+typedef long long ll;
+typedef pair<int, int> ii; typedef pair<int, ii> iii;
+typedef vector<int> vi;    typedef vector<ii> vii;
+
+int n, c, t[2], mi, ans;
+
+int main () {
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	int i, j;
+	
+	cin>>n;
+	t[0] = t[1] = 0; mi = INT_MAX;
+	for (i=0; i<n; i++) {
+		cin>>c;
+		t[c%2] += c;
+		if (c % 2 == 1) mi = min(mi, c);
+	}
+	if (t[1] == 0) cout<<"-1\n";
+	else {
+		if (t[1] % 2 == 1) cout<<t[1]+t[0]<<"\n";
+		else cout<<t[1]-mi+t[0]<<"\n";
+	}
+	
+	return 0;
+}
