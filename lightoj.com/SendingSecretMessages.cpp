@@ -1,8 +1,8 @@
 /*
         By: facug91
-        From: https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4277
-        Name: Admiral
-        Date: 22/08/2015
+        From: http://www.lightoj.com/volume_showproblem.php?problem=1404
+        Name: Sending Secret Messages
+        Date: 26/08/2015
 */
  
 #include <bits/stdc++.h>
@@ -11,6 +11,7 @@
 #define left	dfgag34gsfaf342rf23fgwrf42ff
 #define middle	lk78k6ujkj76kjk88kkummnhh456
 #define right	apidwcojbl213f80sjb3y8efjfas
+#define endl "\n"
 #define EPS 1e-9
 #define MP make_pair
 #define DEB(x) cerr << "#" << (#x) << ": " << (x) << endl
@@ -18,15 +19,15 @@ const double PI = 2.0*acos(0.0);
  
 #define INF 1000000000
 //#define MOD 4294967296ll
-#define MAXN 1001
+//#define MAXN 1001
  
 using namespace std;
 typedef long long ll;
-typedef pair<int, int> ii; typedef pair<int, ii> iii;
+typedef pair<int, int> ii; typedef pair<int, ii> iii; typedef pair<ii, ii> iiii;
 typedef vector<int> vi;    typedef vector<ii> vii;		typedef vector<iii> viii;
 
-int n, m, v, u, in, out, w, s, t, father[2020], fatherEdge[2020], dis[2020], orig, dest;
-vector<pair<ii, ii> > adj[2020];
+int n, m, p, u, v, w, c, s, t, father[55], fatherEdge[55], dis[55];
+vector<iiii> adj[55]; // pair<pair<vértice destino, arista back>, pair<capacidad, costo> >
 
 bool SPFA () {
 	int i, j, u, v, cap, cos;
@@ -53,6 +54,7 @@ bool SPFA () {
 	return (dis[t] != INF);
 }
 
+
 ii dfs (int u, int minEdge) {
 	if (u == s) return ii(minEdge, 0);
 	ii ans = dfs(father[u], min(minEdge, adj[father[u]][fatherEdge[u]].second.first));
@@ -61,57 +63,40 @@ ii dfs (int u, int minEdge) {
 	return make_pair(ans.first, ans.second+(adj[father[u]][fatherEdge[u]].second.second*ans.first));
 }
 
-int mcmf () {
+ii mcmf () {
 	int mf = 0, mc = 0;
-	pair<int, int> ans;
+	ii ans;
 	while (SPFA()) {
 		ans = dfs(t, INT_MAX);
 		mc += ans.second;
 		mf += ans.first;
 	}
-	return mc;
+	return ii(mf, mc);
 }
 
 int main () {
 	ios_base::sync_with_stdio(0); cin.tie(0);
 	//cout<<fixed<<setprecision(7); cerr<<fixed<<setprecision(7); //cin.ignore(INT_MAX, ' '); //cout << setfill('0') << setw(5) << 25
-	int i, j;
+	int tc, i, j;
 	
-	while (cin>>n>>m) {
-		orig = 0; dest = n-1; n *= 2;
-		for (i=0; i<2020; i++) adj[i].clear();
-		for (i=1; i<n/2-1; i++) {
-			out = i * 2 + 1;
-			in = i * 2;
-			adj[in].push_back(make_pair(make_pair(out, 0), make_pair(1, 0)));
-			adj[out].push_back(make_pair(make_pair(in, 0), make_pair(0, 0)));
-		}
-		
-		out = orig * 2 + 1;
-		in = orig * 2;
-		adj[in].push_back(make_pair(make_pair(out, 0), make_pair(2, 0)));
-		adj[out].push_back(make_pair(make_pair(in, 0), make_pair(0, 0)));
-		
-		out = dest * 2 + 1;
-		in = dest * 2;
-		adj[in].push_back(make_pair(make_pair(out, 0), make_pair(2, 0)));
-		adj[out].push_back(make_pair(make_pair(in, 0), make_pair(0, 0)));
-		
+	cin>>tc;
+	for (int it=1; it<=tc; it++) {
+		cin>>n>>m>>p;
+		for (i=0; i<55; i++) adj[i].clear();
 		for (i=0; i<m; i++) {
-			cin>>u>>v>>w; u--; v--;
-			out = u * 2 + 1;
-			in = v * 2;
-			adj[out].push_back(make_pair(make_pair(in, (int)adj[in].size()), make_pair(1, w)));
-			adj[in].push_back(make_pair(make_pair(out, (int)adj[out].size()), make_pair(0, -w)));
+			cin>>u>>v>>c>>w; u--; v--;
+			adj[u].push_back(iiii(ii(v, adj[v].size()), ii(c, w)));
+			adj[v].push_back(iiii(ii(u, adj[u].size()-1), ii(0, -w)));
+			adj[v].push_back(iiii(ii(u, adj[u].size()), ii(c, w)));
+			adj[u].push_back(iiii(ii(v, adj[v].size()-1), ii(0, -w)));
 		}
-		s = n++; t = n++;
-		in = orig * 2;
-		out = dest * 2 + 1;
-		adj[s].push_back(make_pair(make_pair(in, (int)adj[in].size()), make_pair(2, 0)));
-		adj[in].push_back(make_pair(make_pair(s, (int)adj[s].size()-1), make_pair(0, 0)));
-		adj[out].push_back(make_pair(make_pair(t, (int)adj[t].size()), make_pair(2, 0)));
-		adj[t].push_back(make_pair(make_pair(out, (int)adj[out].size()-1), make_pair(0, 0)));
-		cout<<mcmf()<<"\n";
+		s = 0; t = n;
+		adj[n-1].push_back(iiii(ii(t, adj[t].size()), ii(p, 0)));
+		adj[t].push_back(iiii(ii(n-1, adj[n-1].size()-1), ii(0, 0)));
+		n++;
+		ii ans = mcmf();
+		if (ans.first < p) cout<<"Case "<<it<<": impossible\n";
+		else cout<<"Case "<<it<<": "<<ans.second<<"\n";
 	}
 	
 	return 0;
