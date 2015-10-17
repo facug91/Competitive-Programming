@@ -51,15 +51,5 @@ int main () {
 		cout<<"sum:"<<mx<<endl;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	return 0;
 }
