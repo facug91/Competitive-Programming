@@ -1,8 +1,8 @@
 /*
         By: facug91
-        From: https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2214
-        Name: DNA Sequences
-        Date: 15/10/2015
+        From: https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=3675
+        Name: RACING
+        Date: 17/10/2015
 */
  
 #include <bits/stdc++.h>
@@ -23,7 +23,7 @@ const double PI = 2.0*acos(0.0);
  
 #define INF 1000000000
 //#define MOD 1000000007ll
-//#define MAXN 10005
+//#define MAXN 1100000000000000ll
  
 using namespace std;
 typedef long long ll;
@@ -31,32 +31,42 @@ typedef unsigned long long llu;
 typedef pair<int, int> ii; typedef pair<ii, ii> iiii;
 typedef vector<int> vi; typedef vector<ii> vii; typedef vector<iiii> viiii;
 
-int n, m, k, lss[1005][1005], lcs[1005][1005];
-string s, t;
+int n, m, u, v, w, total, used, p[10005];
+vector<pair<int, ii> > edges;
+
+int find_set (int i) {
+	return ((i == p[i]) ? i : (p[i] = find_set(p[i])));
+}
+
+void union_set (int i, int j, int w) {
+	int x = find_set(i);
+	int y = find_set(j);
+	if (x != y) {
+		p[y] = x;
+		used += w;
+	}
+}
 
 int main () {
 	ios_base::sync_with_stdio(0); cin.tie(0);
 	//cout<<fixed<<setprecision(7); cerr<<fixed<<setprecision(7); //cin.ignore(INT_MAX, ' '); //cout << setfill('0') << setw(5) << 25
-	int i, j, l;
+	int tc, i, j;
 	
-	while (cin>>k, k) {
-		cin>>s>>t;
-		n = s.length() + 1;
-		m = t.length() + 1;
-		for (i=0; i<n; i++) lss[i][0] = 0;
-		for (j=0; j<m; j++) lss[0][j] = 0;
-		for (i=1; i<n; i++) for (j=1; j<m; j++) {
-			if (s[i-1] == t[j-1]) lss[i][j] = lss[i-1][j-1] + 1;
-			else lss[i][j] = 0;
+	cin>>tc;
+	while (tc--) {
+		cin>>n>>m;
+		edges.clear();
+		total = 0;
+		while (m--) {
+			cin>>u>>v>>w; u--; v--;
+			edges.push_back(MP(w, MP(u, v)));
+			total += w;
 		}
-		for (i=0; i<n; i++) dp2[i][0] = 0;
-		for (j=0; j<m; j++) dp2[0][j] = 0;
-		for (i=1; i<n; i++) for (j=1; j<m; j++) {
-			lss[i][j] = max(lcs[i-1][j], lcs[i][j-1]);
-			if (lss[i][j] >= k) lcs[i][j] = max(lcs[i][j], lcs[i-k][j-k] + k);
-			if (lss[i][j] > k) lcs[i][j] = max(lcs[i][j],lcs[i-1][j-1]+1);
-		}
-		cout<<lcs[n-1][m-1]<<endl;
+		sort(edges.begin(), edges.end(), greater<pair<int, ii> >());
+		for (i=0; i<n; i++) p[i] = i;
+		used = 0;
+		for (auto edge : edges) union_set(edge.second.first, edge.second.second, edge.first);
+		cout<<total-used<<endl;
 	}
 	
 	return 0;
