@@ -37,8 +37,7 @@ int main () {
 	
 	while (cin>>n>>m) {
 		for (i=0; i<m; i++) cin>>p[i];
-		for (i=1; i<=n; i++) win[i] = false;
-		win[0] = false;
+		memset(win, 0, sizeof win);
 		for (i=1; i<=n; i++) for (j=0; j<m && !win[i]; j++) if (i-p[j] >= 0) win[i] |= !win[i-p[j]];
 		if (win[n]) cout<<"Stan wins"<<endl;
 		else cout<<"Ollie wins"<<endl;
