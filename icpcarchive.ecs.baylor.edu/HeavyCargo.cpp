@@ -1,8 +1,8 @@
 /*
         By: facug91
-        From: https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2214
-        Name: DNA Sequences
-        Date: 15/10/2015
+        From: https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=485
+        Name: Heavy Cargo
+        Date: 17/10/2015
 */
  
 #include <bits/stdc++.h>
@@ -23,7 +23,7 @@ const double PI = 2.0*acos(0.0);
  
 #define INF 1000000000
 //#define MOD 1000000007ll
-//#define MAXN 10005
+//#define MAXN 1100000000000000ll
  
 using namespace std;
 typedef long long ll;
@@ -31,32 +31,34 @@ typedef unsigned long long llu;
 typedef pair<int, int> ii; typedef pair<ii, ii> iiii;
 typedef vector<int> vi; typedef vector<ii> vii; typedef vector<iiii> viiii;
 
-int n, m, k, lss[1005][1005], lcs[1005][1005];
-string s, t;
+int n, r, u, v, s, t, w, adj[205][205], nidx;
+map<string, int> to_idx;
+string su, sv;
 
 int main () {
 	ios_base::sync_with_stdio(0); cin.tie(0);
 	//cout<<fixed<<setprecision(7); cerr<<fixed<<setprecision(7); //cin.ignore(INT_MAX, ' '); //cout << setfill('0') << setw(5) << 25
-	int i, j, l;
+	int tc = 1, i, j, k;
 	
-	while (cin>>k, k) {
-		cin>>s>>t;
-		n = s.length() + 1;
-		m = t.length() + 1;
-		for (i=0; i<n; i++) lss[i][0] = 0;
-		for (j=0; j<m; j++) lss[0][j] = 0;
-		for (i=1; i<n; i++) for (j=1; j<m; j++) {
-			if (s[i-1] == t[j-1]) lss[i][j] = lss[i-1][j-1] + 1;
-			else lss[i][j] = 0;
+	while (cin>>n>>r, n || r) {
+		nidx = 0;
+		memset(adj, -1, sizeof adj);
+		while (r--) {
+			cin>>su>>sv>>w;
+			if (to_idx.find(su) == to_idx.end()) to_idx[su] = nidx++;
+			if (to_idx.find(sv) == to_idx.end()) to_idx[sv] = nidx++;
+			u = to_idx[su]; v = to_idx[sv];
+			if (adj[u][v] < w) adj[u][v] = adj[v][u] = w;
 		}
-		for (i=0; i<n; i++) dp2[i][0] = 0;
-		for (j=0; j<m; j++) dp2[0][j] = 0;
-		for (i=1; i<n; i++) for (j=1; j<m; j++) {
-			lss[i][j] = max(lcs[i-1][j], lcs[i][j-1]);
-			if (lss[i][j] >= k) lcs[i][j] = max(lcs[i][j], lcs[i-k][j-k] + k);
-			if (lss[i][j] > k) lcs[i][j] = max(lcs[i][j],lcs[i-1][j-1]+1);
-		}
-		cout<<lcs[n-1][m-1]<<endl;
+		cin>>su>>sv;
+		s = to_idx[su]; t = to_idx[sv];
+		for (k=0; k<n; k++)
+			for (i=0; i<n; i++)
+				for (j=0; j<n; j++) 
+						adj[i][j] = max(adj[i][j], min(adj[i][k], adj[k][j]));
+		cout<<"Scenario #"<<tc++<<endl;
+		cout<<adj[s][t]<<" tons"<<endl;
+		cout<<endl;
 	}
 	
 	return 0;
