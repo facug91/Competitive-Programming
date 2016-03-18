@@ -25,7 +25,7 @@ typedef unsigned long long llu;
 typedef pair<int, int> ii; typedef pair<ii, ii> iiii;
 typedef vector<int> vi; typedef vector<ii> vii; typedef vector<iiii> viiii;
 
-int n, m, sum, val[520];
+int n, m, sum, val[260];
 char c;
 string line;
 
