@@ -26,9 +26,9 @@ typedef unsigned long long llu;
 typedef pair<int, int> ii; typedef pair<ii, ii> iiii;
 typedef vector<int> vi; typedef vector<ii> vii; typedef vector<iiii> viiii;
 
-int n, m, u, v, s, next[100005];
-vi adj[100005];
-bool vis[100005], curr[100005];
+int n, m, u, v, s, next[200005];
+vi adj[200005];
+bool vis[200005], curr[200005];
 
 bool dfs (int u, int f) {
 	vis[u] = true;
@@ -56,14 +56,15 @@ int main () {
 	cin>>tc;
 	while (tc--) {
 		cin>>n>>m;
-		for (i=0; i<n*2; i++) adj[i].clear();
+		for (i=0; i<n*2; i++) {
+			adj[i].clear();
+			vis[i] = curr[i] = false;
+		}
 		while (m--) {
 			cin>>u>>v; u--; v--;
 			adj[u*2].push_back(v*2+1);
 			adj[u*2+1].push_back(v*2);
 		}
-		memset(vis, 0, sizeof vis);
-		memset(curr, 0, sizeof curr);
 		bool oddCycle = false;
 		for (i=0; i<n*2; i++) if (!vis[i]) {
 			if (dfs(i, -1)) {
