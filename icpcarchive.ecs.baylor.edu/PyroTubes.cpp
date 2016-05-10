@@ -45,10 +45,12 @@ int main () {
 			cin>>n;
 		}
 		for (int i=0; i<m; i++) {
-			for (int j=0; j<18; j++)
+			for (int j=0; j<18; j++) {
 				if (in[a[i] ^ (1<<j)] && (a[i] ^ (1<<j)) > a[i]) ans[i]++;
-			for (int j=0; j<18; j++) for (int k=j+1; k<18; k++) if (j != k)
-				if (in[a[i] ^ (1<<j) ^ (1<<k)] && (a[i] ^ (1<<j) ^ (1<<k)) > a[i]) ans[i]++;
+				for (int k=j+1; k<18; k++) {
+					if (in[a[i] ^ (1<<j) ^ (1<<k)] && (a[i] ^ (1<<j) ^ (1<<k)) > a[i]) ans[i]++;
+				}
+			}	
 		}
 		for (int i=0; i<m; i++) cout<<a[i]<<":"<<ans[i]<<endl;
 	}
