@@ -1,8 +1,8 @@
 /*
 	By: facug91
-	From: http://acm.timus.ru/problem.aspx?space=1&num=1133
-	Name: Fibonacci Sequence
-	Date: 13/06/2016
+	From: https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=4846
+	Name: Shopping
+	Date: 04/07/2016
 */
 
 #include <bits/stdc++.h>
@@ -15,6 +15,7 @@
 #define S second
 #define prev bjasdbi132ge79qwgdi
 #define next usayhkdgisaydgiy212
+#define move sdjifha978dyd9sag89
 #define DB(x) cerr << " #" << (#x) << ": " << (x)
 #define DBL(x) cerr << " #" << (#x) << ": " << (x) << endl
 const double PI = acos(-1.0);
@@ -32,76 +33,31 @@ typedef pair<int, int> ii; typedef pair<ii, int> iii; typedef pair<ii, ii> iiii;
 typedef vector<int> vi; typedef vector<ii> vii; typedef vector<iiii> viiii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set; //insert, find_by_order, order_of_key, erase
 
-ll i, fi, j, fj, k, fk, n;
-
-bool check (ll fk) {
-	ll a = fi, b = fk, c = a + b, s = i + 2;
-	while (s < j) {
-		a = b;
-		b = c;
-		c = a + b;
-		s++;
-		if (c > 1000000000000000ll) {
-			c = LLONG_MAX;
-			break;
-		}
-		if (c < -1000000000000000ll) {
-			c = LLONG_MIN;
-			break;
-		}
-	}
-	return fj <= c;
-}
-
-ll binary_search () {
-	ll lo = -2000000000ll, hi = 2000000000ll, mid;
-	while (lo < hi - 1) {
-		mid = (lo + hi) / 2ll;
-		if (check(mid)) hi = mid;
-		else lo = mid;
-	}
-	return hi;
-}
+int n, m, shop[1010], c, d;
 
 int main () {
 	#ifdef ONLINE_JUDGE
 		ios_base::sync_with_stdio(0); cin.tie(0);
 	#endif
 	//cout<<fixed<<setprecision(9); cerr<<fixed<<setprecision(2); //cin.ignore(INT_MAX, ' '); //cout<<setfill('0')<<setw(9)
+	int tc = 1, i, j, k;
 	
-	cin>>i>>fi>>j>>fj>>n;
-	if (i > j) {
-		swap(i, j);
-		swap(fi, fj);
-	}
-	k = i + 1;
-	if (i == j-1) {
-		fk = fj;
-		fj = fi + fk;
-	} else {
-		fk = binary_search();
-		fj = fi + fk;
-	}
-	j = k + 1;
-	if (n == i) cout<<fi<<endl;
-	else if (n == k) cout<<fk<<endl;
-	else if (n == j) cout<<fj<<endl;
-	else if (n < i) {
-		while (n < i) {
-			fj = fk;
-			fk = fi;
-			fi = fj - fk;
-			i--;
+	while (cin>>n>>m) {
+		memset(shop, 0, sizeof shop);
+		for (i=0; i<m; i++) {
+			cin>>c>>d;
+			shop[c]++;
+			shop[d]--;
 		}
-		cout<<fi<<endl;
-	} else /* if (n > j) */ {
-		while (n > j) {
-			fi = fk;
-			fk = fj;
-			fj = fi + fk;
-			j++;
+		for (i=1; i<n+1; i++) shop[i] += shop[i-1];
+		int ans = n+1, curr = 0;
+		for (i=0; i<n+1; i++) {
+			if (shop[i] == 0) {
+				ans += curr*2;
+				curr = 0;
+			} else curr++;
 		}
-		cout<<fj<<endl;
+		cout<<ans<<endl;
 	}
 	
 	return 0;

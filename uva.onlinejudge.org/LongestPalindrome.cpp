@@ -1,8 +1,8 @@
 /*
 	By: facug91
-	From: http://acm.timus.ru/problem.aspx?space=1&num=1133
-	Name: Fibonacci Sequence
-	Date: 13/06/2016
+	From: https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=2092
+	Name: Longest Palindrome
+	Date: 02/07/2016
 */
 
 #include <bits/stdc++.h>
@@ -32,35 +32,15 @@ typedef pair<int, int> ii; typedef pair<ii, int> iii; typedef pair<ii, ii> iiii;
 typedef vector<int> vi; typedef vector<ii> vii; typedef vector<iiii> viiii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set; //insert, find_by_order, order_of_key, erase
 
-ll i, fi, j, fj, k, fk, n;
+int DP[1005][1005];
+string s;
 
-bool check (ll fk) {
-	ll a = fi, b = fk, c = a + b, s = i + 2;
-	while (s < j) {
-		a = b;
-		b = c;
-		c = a + b;
-		s++;
-		if (c > 1000000000000000ll) {
-			c = LLONG_MAX;
-			break;
-		}
-		if (c < -1000000000000000ll) {
-			c = LLONG_MIN;
-			break;
-		}
-	}
-	return fj <= c;
-}
-
-ll binary_search () {
-	ll lo = -2000000000ll, hi = 2000000000ll, mid;
-	while (lo < hi - 1) {
-		mid = (lo + hi) / 2ll;
-		if (check(mid)) hi = mid;
-		else lo = mid;
-	}
-	return hi;
+int dp (int i, int j) {
+	if (DP[i][j] != -1) return DP[i][j];
+	if (i > j) return DP[i][j] = 0;
+	if (i == j) return DP[i][j] = 1;
+	if (s[i] == s[j]) return DP[i][j] = dp(i+1, j-1) + 2;
+	return DP[i][j] = max(dp(i+1, j), dp(i, j-1));
 }
 
 int main () {
@@ -68,40 +48,15 @@ int main () {
 		ios_base::sync_with_stdio(0); cin.tie(0);
 	#endif
 	//cout<<fixed<<setprecision(9); cerr<<fixed<<setprecision(2); //cin.ignore(INT_MAX, ' '); //cout<<setfill('0')<<setw(9)
+	int tc = 1, i, j, k;
 	
-	cin>>i>>fi>>j>>fj>>n;
-	if (i > j) {
-		swap(i, j);
-		swap(fi, fj);
-	}
-	k = i + 1;
-	if (i == j-1) {
-		fk = fj;
-		fj = fi + fk;
-	} else {
-		fk = binary_search();
-		fj = fi + fk;
-	}
-	j = k + 1;
-	if (n == i) cout<<fi<<endl;
-	else if (n == k) cout<<fk<<endl;
-	else if (n == j) cout<<fj<<endl;
-	else if (n < i) {
-		while (n < i) {
-			fj = fk;
-			fk = fi;
-			fi = fj - fk;
-			i--;
-		}
-		cout<<fi<<endl;
-	} else /* if (n > j) */ {
-		while (n > j) {
-			fi = fk;
-			fk = fj;
-			fj = fi + fk;
-			j++;
-		}
-		cout<<fj<<endl;
+	cin>>tc; getline(cin, s);
+	while (tc--) {
+		getline(cin, s);
+		for (i=0; i<(int)s.length()+1; i++) 
+			for (j=0; j<(int)s.length()+1; j++)
+				DP[i][j] = -1;
+		cout<<dp(0, (int)s.length()-1)<<endl;
 	}
 	
 	return 0;
