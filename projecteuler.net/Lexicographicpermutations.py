@@ -5,6 +5,7 @@
 	Date: 01/01/2017
 '''
 
+# This function implements the algorithm described in https://www.nayuki.io/page/next-lexicographical-permutation-algorithm
 def next_permutation (perm):
     curr = len(perm)-1
     while curr > 0 and perm[curr-1] >= perm[curr]:
