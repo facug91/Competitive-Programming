@@ -1,0 +1,39 @@
+/*
+        By:
+        From:
+        Name:
+        Date:
+*/
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#ifdef DEBUG
+#define endline std::endl
+#define LOG(x) std::cerr << "#" << (#x) << ": " << (x) << std::endl
+#else
+#define endline "\n"
+#define LOG(x)
+#endif
+
+#define y0 dbnw9uddu0132dnd03dnqwuidg1o
+#define y1 nd03dnqwuidg1odbnw9uddu0132d
+const double EPS = 1e-9;
+const double PI = 2.0 * acos(0.0);
+using ll = long long;
+using ii = pair<int, int>;
+using vi = vector<int>;
+
+const int MAX_N = 1e5 + 5;
+const int MAX_K = 16;
+const int MOD = 1e9 + 7;
+
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+	cout.tie(nullptr);
+
+
+	return 0;
+}
