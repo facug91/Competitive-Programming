@@ -1,0 +1,10 @@
+OJ-Solutions/
+
+Main.cpp
+MainFull.cpp
+
+.idea/
+
+cmake-build-*
+
+TODO-list.txt
