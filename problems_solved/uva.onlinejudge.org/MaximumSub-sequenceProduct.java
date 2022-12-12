@@ -13,20 +13,20 @@ public class Main {
 	public static void main (String [] args) throws IOException {
 		Scanner in = new Scanner(new BufferedReader(new InputStreamReader(System.in)));
 		Writer out = new BufferedWriter(new OutputStreamWriter(System.out));
-		ArrayList<BigInteger> arr;
+		ArrayList<BigInteger> a;
 		BigInteger bi, ans, aux;
 		while (in.hasNextBigInteger()) {
-			arr = new ArrayList<BigInteger>();
+			a = new ArrayList<BigInteger>();
 			bi = in.nextBigInteger();
 			while (bi.compareTo(new BigInteger("-999999")) != 0) {
-				arr.add(bi);
+				a.add(bi);
 				bi = in.nextBigInteger();
 			}
 			ans = new BigInteger("-1000000");
-			for (int i=0; i<arr.size(); i++) {
+			for (int i=0; i<a.size(); i++) {
 				aux = new BigInteger("1");
-				for (int j=i; j<arr.size(); j++) {
-					aux = aux.multiply(arr.get(j));
+				for (int j=i; j<a.size(); j++) {
+					aux = aux.multiply(a.get(j));
 					if (ans.compareTo(aux) < 0) ans = aux;
 				}
 			}

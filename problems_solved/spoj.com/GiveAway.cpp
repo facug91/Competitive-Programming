@@ -1,8 +1,8 @@
 /*
         By: facug91
-        From: https://onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&category=0&problem=3154&mosmsg=Submission+received+with+ID+28082126
-        Name: 12003 - Array Transformer
-        Date: 09/12/2022
+        From: https://www.spoj.com/problems/GIVEAWAY/
+        Name: GIVEAWAY - Give Away
+        Date: 11/12/2022
         Solution: sqrt decomposition + sorting
 */
 
@@ -127,38 +127,41 @@ using ii = pair<int, int>;
 using vi = vector<int>;
 using vii = vector<ii>;
 
-const int MAX_N = 3e5 + 5;
+const int MAX_N = 5e5 + 5;
 const int MAX_Q = 1e5 + 5;
 const int MOD = 1e9 + 7;
 
 const int blockSize = 1000;
-int n, m, u, a[MAX_N];
-SqrtDecompositionLessThanPointUpdateRangeQuery<int, MAX_N, blockSize> sd;
+int n, m, a[MAX_N];
+
+SqrtDecompositionGreaterThanPointUpdateRangeQuery<int, MAX_N, blockSize> qd;
 
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr);
 	cout.tie(nullptr);
 
-	cin >> n >> m >> u;
+	cin >> n;
 	for (int i = 0; i < n; i++) cin >> a[i];
 
-	sd.init(n, a);
+	qd.init(n, a);
 
-	int l, r, v, p;
+	int type, l, r, c;
+	cin >> m;
 	while (m--) {
-		cin >> l >> r >> v >> p;
-		l--;
-		r--;
-		p--;
-
-		int k = sd.count(l, r, v);
-		auto newVal = floor((k / (r - l + 1.0)) * u);
-		sd.update(p, newVal);
-		a[p] = newVal;
+		cin >> type;
+		if (type == 0) {
+			cin >> l >> r >> c;
+			l--;
+			r--;
+			cout << qd.count(l, r, c) << endline;
+		} else {
+			cin >> l >> c;
+			l--;
+			qd.update(l, c);
+			a[l] = c;
+		}
 	}
-
-	for (int i = 0; i < n; i++) cout << a[i] << endline;
 
 	return 0;
 }
