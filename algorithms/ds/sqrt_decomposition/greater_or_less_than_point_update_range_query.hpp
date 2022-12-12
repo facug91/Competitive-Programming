@@ -1,4 +1,19 @@
 
+/**
+ * \brief Defines a class for a data structure build with sqrt decomposition to efficiently obtain amount of values greater (or smaller)
+ *        than a dynamic value.
+ *        State: tested.
+ *        Ref: https://cp-algorithms.com/data_structures/sqrt_decomposition.html
+ *
+ * \details Build: O(MaxSize * log2(BlockSize)) -> using BlockSize = sqrt(MaxSize): O(MaxSize * log2(sqrt(MaxSize))
+ *          Query: O(MaxSize / BlockSize * log2(BlockSize)) -> using BlockSize = sqrt(MaxSize): O(sqrt(MaxSize) * log2(sqrt(MaxSize))
+ *          Update: O(BlockSize) -> using BlockSize = sqrt(MaxSize): O(sqrt(MaxSize))
+ *
+ * \tparam ValueType Type of the elements.
+ * \tparam MaxSize Maximum number of elements.
+ * \tparam BlockSize Size of the blocks (sometimes sqrt(MaxSize) is not optimal).
+ * \tparam ElementCompare Comparator function to use (std::less, std::less_equal, std::greater, std::greater_equal).
+ */
 template<typename ValueType, int MaxSize, int BlockSize, typename ElementCompare>
 class SqrtDecompositionGreaterOrLessThanPointUpdateRangeQuery {
 private:

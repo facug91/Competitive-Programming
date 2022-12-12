@@ -6,14 +6,16 @@ if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp")
   configure_file(${CMAKE_SOURCE_DIR}/Main.cpp.template ${CMAKE_SOURCE_DIR}/Main.cpp COPYONLY)
 endif()
 
-set(HEADERS algorithms/ds/sparse_table.hpp algorithms/ds/ufds.hpp algorithms/ds/min_max_queue.hpp
+set(HEADERS
+    algorithms/ds/sparse_table.hpp algorithms/ds/ufds.hpp algorithms/ds/min_max_queue.hpp
     algorithms/ds/fenwick_tree/fenwick_tree_point_update_range_query.hpp
     algorithms/ds/fenwick_tree/fenwick_tree_range_update_point_query.hpp
     algorithms/ds/fenwick_tree/fenwick_tree_range_update_range_query.hpp
     algorithms/ds/fenwick_tree/fenwick_tree_min_max.hpp
     algorithms/ds/fenwick_tree/fenwick_tree2D_point_update_range_query.hpp
     algorithms/ds/fenwick_tree/fenwick_tree3D_point_update_range_query.hpp
-    algorithms/ds/sqrt_decomposition/greater_or_less_than_point_update_range_query.hpp)
+    algorithms/ds/sqrt_decomposition/greater_or_less_than_point_update_range_query.hpp
+    )
 
 add_executable(cp_main Main.cpp ${HEADERS})
 
