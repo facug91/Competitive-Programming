@@ -24,12 +24,22 @@ public:
 
 	void init(int size, ValueType val) {
 		init(size);
-		for (size_t i = 0; i < size; i++) add(i, val);
+		bit[0] = 0;
+		std::fill(bit + 1, bit + size + 1, val);
+		for (size_t i = 0; i < size; i++) {
+			size_t j = i + (i & -i);
+			if (j <= n) bit[j] += bit[i];
+		}
 	}
 
 	void init(int size, ValueType* arr) {
 		init(size);
-		for (size_t i = 0; i < size; i++) add(i, arr[i]);
+		bit[0] = 0;
+		std::copy(arr, arr + size, bit + 1);
+		for (size_t i = 0; i < size; i++) {
+			size_t j = i + (i & -i);
+			if (j <= n) bit[j] += bit[i];
+		}
 	}
 
 	void init(std::vector<ValueType>& arr) {
