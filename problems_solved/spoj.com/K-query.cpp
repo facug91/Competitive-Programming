@@ -3,6 +3,7 @@
         From: http://www.spoj.com/problems/KQUERY/
         Name: K-query
         Date: 04/10/2016
+        Solution: Segment Tree + Sorting
 */
 
 #include <bits/stdc++.h>
